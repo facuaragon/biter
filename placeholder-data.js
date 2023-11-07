@@ -240,10 +240,10 @@ const menu = [
     category: "pizzas y empanadas by leña",
   },
   {
-    name: "media pizza napolitana2200",
+    name: "media pizza napolitana",
     description: "",
     image: "",
-    price: "",
+    price: "2200",
     category: "pizzas y empanadas by leña",
   },
   {
