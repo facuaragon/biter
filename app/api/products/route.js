@@ -1,14 +1,18 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import { Product } from "@/models/Product";
 import { NextResponse } from "next/server";
+import { isAdminRequest } from "../auth/[...nextauth]/route";
 
 export async function GET(req, res) {
   const { searchParams } = new URL(req.url);
   const _id = searchParams.get("id");
   // console.log(_id);
+
   try {
     await mongooseConnect();
     if (_id) {
+      const admin = await isAdminRequest(req, res);
+      if (admin.status != 200) throw new Error("Not an admin");
       const product = await Product.findById(_id);
       return NextResponse.json(product);
     } else {
@@ -23,6 +27,8 @@ export async function POST(req, res) {
   const { name, description, price, images, category, serving } =
     await req.json();
   try {
+    const admin = await isAdminRequest(req, res);
+    if (admin.status != 200) throw new Error("Not an admin");
     await mongooseConnect();
     const product = await Product.create({
       name,
@@ -41,6 +47,8 @@ export async function PUT(req, res) {
   const { name, description, price, images, category, serving, _id } =
     await req.json();
   try {
+    const admin = await isAdminRequest(req, res);
+    if (admin.status != 200) throw new Error("Not an admin");
     await mongooseConnect();
     const productUpdate = await Product.updateOne(
       { _id },
@@ -56,6 +64,8 @@ export async function DELETE(req, res) {
   const _id = searchParams.get("id");
 
   try {
+    const admin = await isAdminRequest(req, res);
+    if (admin.status != 200) throw new Error("Not an admin");
     await mongooseConnect();
     const product = await Product.deleteOne({ _id });
     return NextResponse.json({ message: "Product Deleted" });

@@ -12,7 +12,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <div className=" bg-slate-300 min-h-screen min-w-screen flex items-center">
+            {children}
+          </div>
+        </AuthProvider>
       </body>
     </html>
   );

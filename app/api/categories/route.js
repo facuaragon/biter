@@ -1,9 +1,12 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import { Category } from "@/models/Category";
 import { NextResponse } from "next/server";
+import { isAdminRequest } from "../auth/[...nextauth]/route";
 
 export async function GET(req, res) {
   try {
+    // const admin = await isAdminRequest(req, res);
+    // if (admin.status != 200) throw new Error("Not an admin");
     await mongooseConnect();
     const categories = await Category.find();
     return NextResponse.json(categories);
@@ -15,6 +18,8 @@ export async function POST(req, res) {
   const { name } = await req.json();
 
   try {
+    const admin = await isAdminRequest(req, res);
+    if (admin.status != 200) throw new Error("Not an admin");
     await mongooseConnect();
     const oldCategory = await Category.findOne({ name });
     if (!oldCategory) {
@@ -30,6 +35,8 @@ export async function POST(req, res) {
 export async function PUT(req, res) {
   const { name, _id } = await req.json();
   try {
+    const admin = await isAdminRequest(req, res);
+    if (admin.status != 200) throw new Error("Not an admin");
     await mongooseConnect();
     const categoryUpdate = await Category.updateOne({ _id }, { name });
     return NextResponse.json({ categoryUpdate });
@@ -42,6 +49,8 @@ export async function DELETE(req, res) {
   const _id = searchParams.get("_id");
 
   try {
+    const admin = await isAdminRequest(req, res);
+    if (admin.status != 200) throw new Error("Not an admin");
     await mongooseConnect();
     const category = await Category.deleteOne({ _id });
     return NextResponse.json({ message: "Category Deleted" });
