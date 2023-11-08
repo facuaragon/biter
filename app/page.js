@@ -43,7 +43,7 @@ export default function Home() {
       <CSSTransition
         in={logo}
         timeout={{
-          exit: 0,
+          exit: 1000,
           appear: 1500,
         }}
         appear={true}

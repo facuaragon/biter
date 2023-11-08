@@ -22,14 +22,22 @@
     /* width: 90% */
 }
 
-/* .logoexit{
+.logoexit{
     opacity: 1;
+    min-width: 100%;
+    transform: scale(1);
+
+
+    
 }
 .logoexitActive{
-    opacity:0;
+    min-width: 100%;
+    transform: scale(1);
     transition: all 1000ms linear;
-}*/
+}
 .logoexitDone{
+    min-width: 100%;
+    transform: scale(1);
     opacity: 1;
 
 } 
@@ -43,7 +51,7 @@
     align-items: center;
     
     opacity: 0;
-    transform: scale(0.1);
+    transform: scale(0);
 }
 .logoappearActive{
    opacity: 1;
