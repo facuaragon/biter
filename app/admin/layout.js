@@ -11,7 +11,7 @@ export default function Layout({ children }) {
   if (session) {
     return (
       <>
-        <div className="bg-bgGray min-h-screen ">
+        <div className="bg-bgGray min-h-screen min-w-full">
           <div className="md:hidden flex items-center p-4">
             <button
               onClick={() => {
